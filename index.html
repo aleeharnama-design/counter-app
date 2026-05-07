@@ -3,9 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Counter App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .counter {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        #counter-value {
+            display: inline-block;
+            font-size: 72px;
+            font-weight: 700;
+            color: #667eea;
+            min-width: 150px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 0.6s ease-out;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            flex: 1;
+            min-width: 100px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #increment-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        #increment-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        #increment-btn:active {
+            transform: translateY(0);
+        }
+
+        #decrement-btn {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        #decrement-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        #decrement-btn:active {
+            transform: translateY(0);
+        }
+
+        #reset-btn {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            width: 100%;
+        }
+
+        #reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        #reset-btn:active {
+            transform: translateY(0);
+        }
+
+        .info {
+            margin-top: 30px;
+            color: #666;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 480px) {
+            .counter {
+                padding: 40px 20px;
+            }
+
+            #counter-value {
+                font-size: 56px;
+            }
+
+            button {
+                min-width: 80px;
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="counter">
+        <h1>✨ Counter App</h1>
+        <div id="counter-value">0</div>
+        <div class="button-group">
+            <button id="decrement-btn">➖ Decrease</button>
+            <button id="increment-btn">➕ Increase</button>
+        </div>
+        <button id="reset-btn">🔄 Reset</button>
+        <div class="info">Click buttons to update the counter in real-time</div>
+    </div>
+
+    <script>
+        let counterValue = 0;
+
+        const counterDisplay = document.getElementById('counter-value');
+        const incrementBtn = document.getElementById('increment-btn');
+        const decrementBtn = document.getElementById('decrement-btn');
+        const resetBtn = document.getElementById('reset-btn');
+
+        function updateCounterDisplay() {
+            counterDisplay.textContent = counterValue;
+            counterDisplay.style.animation = 'none';
+            setTimeout(() => {
+                counterDisplay.style.animation = 'pulse 0.6s ease-out';
+            }, 10);
+        }
+
+        incrementBtn.addEventListener('click', () => {
+            counterValue++;
+            updateCounterDisplay();
+        });
+
+        decrementBtn.addEventListener('click', () => {
+            counterValue--;
+            updateCounterDisplay();
+        });
+
+        resetBtn.addEventListener('click', () => {
+            counterValue = 0;
+            updateCounterDisplay();
+        });
+
+        // Optional: Allow keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '+' || e.key === '=') {
+                counterValue++;
+                updateCounterDisplay();
+            } else if (e.key === '-' || e.key === '_') {
+                counterValue--;
+                updateCounterDisplay();
+            } else if (e.key === '0') {
+                counterValue = 0;
+                updateCounterDisplay();
+            }
+        });
+    </script>
 </body>
 </html>
